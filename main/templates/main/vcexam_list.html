@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список экзаменов</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .exam-card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .exam-image {
+            max-width: 300px;
+            height: auto;
+        }
+        .exam-title {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .exam-date {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .exam-users {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Владимир Чебуров - Группа 123</h1>
+    <h2>Список опубликованных экзаменов</h2>
+    
+    {% for exam in exams %}
+    <div class="exam-card">
+        <h3 class="exam-title">{{ exam.name }}</h3>
+        <p class="exam-date">Дата проведения: {{ exam.exam_date }}</p>
+        <p>Дата создания: {{ exam.created_at }}</p>
+        {% if exam.image %}
+            <img src="{{ exam.image.url }}" alt="{{ exam.name }}" class="exam-image">
+        {% endif %}
+        <div class="exam-users">
+            <h4>Пользователи:</h4>
+            <ul>
+                {% for user in exam.users.all %}
+                    <li>{{ user.username }} ({{ user.email }})</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% empty %}
+        <p>Нет опубликованных экзаменов.</p>
+    {% endfor %}
+</body>
+</html> 
